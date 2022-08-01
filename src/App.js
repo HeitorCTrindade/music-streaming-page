@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Content from './Components/Content';
 
 class App extends React.Component {
   render() {
-    return (<p>TrybeTunes GO!</p>);
+    return (<Content />);
   }
 }
 
