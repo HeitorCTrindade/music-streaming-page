@@ -17,3 +17,13 @@ code {
   display: flex;
   justify-content: center;
 }
+
+Header {
+  background-color: greenyellow;
+}
+
+Search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

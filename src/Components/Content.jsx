@@ -17,13 +17,17 @@ class Content extends Component {
           <Route exact path="/search" component={ Search } />
           <Route exact path="/album/:id" component={ Album } />
           <Route exact path="/favorites" component={ Favorites } />
-          <Route exact path="/Profile" component={ Profile } />
-          <Route exact path="/Profile/edit/" component={ ProfileEdit } />
+          <Route exact path="/profile" component={ Profile } />
+          <Route exact path="/profile/edit/" component={ ProfileEdit } />
           <Route exact path="*" component={ PageNotFound } />
         </Switch>
       </main>
     );
   }
 }
+
+/* render={ (props) = ({
+  {...props}
+}) */
 
 export default Content;
