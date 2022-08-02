@@ -13,10 +13,6 @@ class Album extends Component {
 
   componentDidMount() {
     const { match: { params: { id } } } = this.props;
-    // const arrayMuscisFromAlbum = await getMusics(id);
-    // this.setState({ arrayMusicCardElements:
-    //   this.musicCardElements(arrayMuscisFromAlbum) });
-    // this.setState({ isPageLoading: false });
     this.setState(async () => {
       const arrayMuscisFromAlbum = await getMusics(id);
       this.setState({ arrayMusicCardElements:
@@ -35,7 +31,6 @@ class Album extends Component {
         previewUrl={ music.previewUrl }
       />
     ));
-    console.log(array[1]);
     return (
       <div>
         <h2 data-testid="artist-name">
