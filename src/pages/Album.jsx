@@ -7,45 +7,50 @@ import Loading from '../Components/Loading';
 
 class Album extends Component {
   state = {
-    muscisFromAlbum: [],
+    // muscisFromAlbum: [],
     isPageLoading: true,
+    arrayMusicCardElements: <> </>,
   };
 
   async componentDidMount() {
     const { match: { params: { id } } } = this.props;
-    this.setState(async () => {
-      const arrayMuscisFromAlbum = await getMusics(id);
-      this.setState({ muscisFromAlbum: arrayMuscisFromAlbum });
-      this.setState({ isPageLoading: false });
-    });
+    const arrayMuscisFromAlbum = await getMusics(id);
+    // this.setState({ muscisFromAlbum: arrayMuscisFromAlbum });
+    this.setState({ arrayMusicCardElements:
+      this.musicCardElements(arrayMuscisFromAlbum) });
+    this.setState({ isPageLoading: false });
   }
 
-  musicCardElements = () => {
-    const { muscisFromAlbum } = this.state;
-    muscisFromAlbum.shift();
-    const arrayMusicCardElements = muscisFromAlbum.map((music) => (
+  musicCardElements = (array) => {
+    const filteredMuscisFromAlbum = array
+      .filter((track) => track.wrapperType === 'track');
+    const arrayMusicCardElements = filteredMuscisFromAlbum.map((music) => (
       <MusicCard
         key={ music.trackId }
         trackName={ music.trackName }
         previewUrl={ music.previewUrl }
       />
     ));
-    return arrayMusicCardElements;
+    console.log(array[1]);
+    return (
+      <div>
+        <h2 data-testid="artist-name">
+          { array[0].artistName }
+        </h2>
+        <h4 data-testid="album-name">
+          { array[0].collectionName }
+        </h4>
+        { arrayMusicCardElements }
+      </div>
+    );
   }
 
   render() {
-    const { muscisFromAlbum, isPageLoading } = this.state;
-    const arrayMusicCardElements = this.musicCardElements();
-    console.log(muscisFromAlbum);
+    const { isPageLoading, arrayMusicCardElements } = this.state;
     return (
       <div data-testid="page-album">
         <Header />
-        { isPageLoading ? <Loading /> : (
-          <div>
-            
-          </div>
-        )}
-        { arrayMusicCardElements }
+        { isPageLoading ? <Loading /> : arrayMusicCardElements }
       </div>
     );
   }
