@@ -81,7 +81,7 @@ class Album extends Component {
 
     const arrayMusicCardElements = filteredMusicsFromAlbum.map((music, key) => {
       const isFavoriteMusic = arrayFavoriteMusics
-        .some((favoriteMusic) => favoriteMusic.trackId === music.trackId);
+        .some((favoriteMusic) => favoriteMusic[0].trackId === music.trackId);
       return (
         <MusicCard
           key={ music.trackId }
