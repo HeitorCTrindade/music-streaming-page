@@ -7,23 +7,27 @@ import Loading from '../Components/Loading';
 
 class Album extends Component {
   state = {
-    // muscisFromAlbum: [],
     isPageLoading: true,
     arrayMusicCardElements: <> </>,
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     const { match: { params: { id } } } = this.props;
-    const arrayMuscisFromAlbum = await getMusics(id);
-    // this.setState({ muscisFromAlbum: arrayMuscisFromAlbum });
-    this.setState({ arrayMusicCardElements:
-      this.musicCardElements(arrayMuscisFromAlbum) });
-    this.setState({ isPageLoading: false });
+    // const arrayMuscisFromAlbum = await getMusics(id);
+    // this.setState({ arrayMusicCardElements:
+    //   this.musicCardElements(arrayMuscisFromAlbum) });
+    // this.setState({ isPageLoading: false });
+    this.setState(async () => {
+      const arrayMuscisFromAlbum = await getMusics(id);
+      this.setState({ arrayMusicCardElements:
+        this.musicCardElements(arrayMuscisFromAlbum) });
+      this.setState({ isPageLoading: false });
+    });
   }
 
   musicCardElements = (array) => {
     const filteredMuscisFromAlbum = array
-      .filter((track) => track.wrapperType === 'track');
+      .filter((track) => track.trackId);
     const arrayMusicCardElements = filteredMuscisFromAlbum.map((music) => (
       <MusicCard
         key={ music.trackId }
