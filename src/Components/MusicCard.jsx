@@ -13,7 +13,7 @@ class MusicCard extends Component {
           {' '}
           <code>audio</code>
         </audio>
-        <label htmlFor="User">
+        <label htmlFor={ id }>
           Favorita
           <input
             type="checkbox"

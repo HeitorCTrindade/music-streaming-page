@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../Components/Header';
 import Loading from '../Components/Loading';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
+import '../index.css';
 
 const minChacteresToSearch = 2;
 
@@ -53,7 +54,7 @@ class Search extends Component {
       </div>
     )));
     return (
-      <div>
+      <div className="albuns-cart">
         <h2>
           { `Resultado de álbuns de:  ${searchArtist}`}
         </h2>

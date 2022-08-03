@@ -31,7 +31,7 @@ class Header extends Component {
         <nav>
           <Link to="/search" data-testid="link-to-search">Pesquisa</Link>
           <Link to="/favorites" data-testid="link-to-favorites">Musicas Favoritas</Link>
-          <Link to="/profile" data-testid="link-to-profile">Aulas ao Vivo</Link>
+          <Link to="/profile" data-testid="link-to-profile">Profile</Link>
         </nav>
       </header>
     );
