@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../Components/Header';
 import getMusics from '../services/musicsAPI';
-import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 import MusicCard from '../Components/MusicCard';
 import Loading from '../Components/Loading';
 
@@ -61,19 +61,54 @@ class Album extends Component {
   //   );
   // }
 
-  handleCheckBox = async (event) => {
+  handleCheckBox = (event) => {
     this.setState({ isSavingMusic: true });
-    const { name } = event.target;
+    const { name, checked } = event.target;
+    if (checked) {
+      this.saveFavoriteMusic(parseInt(name, 10));
+    } else {
+      this.deleteFavoriteMusic(parseInt(name, 10));
+    }
+  }
+
+  saveFavoriteMusic = async (musicId) => {
     const { arrayMusicsCard } = this.state;
     const musicFavoriteObj = arrayMusicsCard
-      .filter((musics) => musics.trackId === parseInt(name, 10));
-    await addSong(musicFavoriteObj);
+      .filter((musics) => musics.trackId === musicId);
+    await addSong(musicFavoriteObj[0]);
+    console.log(musicFavoriteObj[0]);
     this.setState((prev) => ({
-      arrayFavoriteMusics: [...prev.arrayFavoriteMusics, musicFavoriteObj] }));
+      arrayFavoriteMusics: [...prev.arrayFavoriteMusics, musicFavoriteObj[0]] }));
     this.setState({ isSavingMusic: false });
   }
 
-  createArrayMusicCardElements = () => {
+  deleteFavoriteMusic = async (musicId) => {
+    const { arrayFavoriteMusics } = this.state;
+    const newFavoriteMusicsArray = arrayFavoriteMusics
+      .filter((music) => music.trackId !== musicId);
+    const musicFavoriteObj = arrayFavoriteMusics
+      .filter((music) => music.trackId === musicId);
+    await removeSong(musicFavoriteObj[0]);
+    this.setState({ arrayFavoriteMusics: newFavoriteMusicsArray });
+    this.setState({ isSavingMusic: false });
+  }
+
+  createAlbumElements = () => {
+    const { arrayMusicsCard } = this.state;
+    return (
+      <div>
+        <h2 data-testid="artist-name">
+          { arrayMusicsCard[0].artistName }
+        </h2>
+        <h4 data-testid="album-name">
+          { arrayMusicsCard[0].collectionName }
+        </h4>
+        { this.generateArrayMusicCardElements() }
+      </div>
+    );
+  }
+
+  generateArrayMusicCardElements = () => {
     const { arrayFavoriteMusics, arrayMusicsCard } = this.state;
 
     const filteredMusicsFromAlbum = arrayMusicsCard
@@ -81,7 +116,7 @@ class Album extends Component {
 
     const arrayMusicCardElements = filteredMusicsFromAlbum.map((music, key) => {
       const isFavoriteMusic = arrayFavoriteMusics
-        .some((favoriteMusic) => favoriteMusic[0].trackId === music.trackId);
+        .some((favoriteMusic) => favoriteMusic.trackId === music.trackId);
       return (
         <MusicCard
           key={ music.trackId }
@@ -93,19 +128,8 @@ class Album extends Component {
           onChange={ this.handleCheckBox }
         />
       );
-    }); // generate music cards elements
-
-    return (
-      <div>
-        <h2 data-testid="artist-name">
-          { arrayMusicsCard[0].artistName }
-        </h2>
-        <h4 data-testid="album-name">
-          { arrayMusicsCard[0].collectionName }
-        </h4>
-        { arrayMusicCardElements }
-      </div>
-    );
+    });
+    return arrayMusicCardElements;
   }
 
   render() {
@@ -118,7 +142,7 @@ class Album extends Component {
         <hr />
         <hr />
         <hr />
-        { isPageLoading ? <Loading /> : this.createArrayMusicCardElements() }
+        { isPageLoading ? <Loading /> : this.createAlbumElements() }
       </div>
     );
   }
