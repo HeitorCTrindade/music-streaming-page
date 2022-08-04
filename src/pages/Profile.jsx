@@ -21,7 +21,7 @@ class Profile extends Component {
   }
 
   createProfileElements = () => {
-    const { userData: { name, email, image, description} } = this.state;
+    const { userData: { name, email, image, description } } = this.state;
     return (
       <div>
         <p>{ name }</p>
