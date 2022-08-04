@@ -24,11 +24,11 @@ class Profile extends Component {
     const { userData: { name, email, image, description } } = this.state;
     return (
       <div>
+        <img src={ image } alt="userImage" data-testid="profile-image" />
         <p>{ name }</p>
         <p>{ email }</p>
         <p>{ description }</p>
-        <img src={ image } alt="userImage" data-testid="profile-image" />
-        <Link to="/profile/edit">Editar perfil</Link>
+        <Link to="/profile/edit"> Editar perfil </Link>
       </div>
     );
   }
