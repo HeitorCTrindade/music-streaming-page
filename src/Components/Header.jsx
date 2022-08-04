@@ -24,7 +24,6 @@ class Header extends Component {
         <h1>imagine um header</h1>
         { isPageLoading ? <Loading /> : (
           <h2 data-testid="header-user-name">
-            Usuário:
             { userName }
           </h2>
         )}

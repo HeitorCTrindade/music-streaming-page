@@ -1,12 +1,44 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../Components/Header';
+import Loading from '../Components/Loading';
+import { getUser } from '../services/userAPI';
 
 class Profile extends Component {
-  render() {
+  state = {
+    isPageLoading: true,
+    userData: [],
+  };
+
+  // {"name":"aaaa","email":"","image":"","description":""}
+
+  componentDidMount() {
+    this.setState(async () => {
+      const userDataReceive = await getUser();
+      this.setState({ userData: userDataReceive });
+      this.setState({ isPageLoading: false });
+    });
+  }
+
+  createProfileElements = () => {
+    const { userData: { name, email, image, description} } = this.state;
     return (
-      <div data-testid="page-profile">
+      <div>
+        <p>{ name }</p>
+        <p>{ email }</p>
+        <p>{ description }</p>
+        <img src={ image } alt="userImage" data-testid="profile-image" />
+        <Link to="/profile/edit">Editar perfil</Link>
+      </div>
+    );
+  }
+
+  render() {
+    const { isPageLoading } = this.state;
+    return (
+      <div data-testid="page-album">
         <Header />
-        Profile
+        { isPageLoading ? <Loading /> : this.createProfileElements() }
       </div>
     );
   }
