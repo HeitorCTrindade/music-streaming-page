@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Header from '../Components/Header';
 import Loading from '../Components/Loading';
 import { getUser, updateUser } from '../services/userAPI';
@@ -151,5 +152,9 @@ class ProfileEdit extends Component {
     );
   }
 }
+
+ProfileEdit.propTypes = {
+  history: PropTypes.string.isRequired,
+};
 
 export default ProfileEdit;
