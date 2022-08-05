@@ -26,6 +26,19 @@ class ProfileEdit extends Component {
         userDescribe: userDataReceive.description,
       });
       this.setState({ isPageLoading: false });
+      const {
+        userName,
+        userEmail,
+        userImage,
+        userDescribe,
+      } = this.state;
+      const isButtonDisabled = userName.length === 0
+        || this.isValidEmail(userEmail) === false
+        || userImage.length === 0
+        || userDescribe.length === 0;
+      this.setState({
+        isSaveButtonDisabled: isButtonDisabled,
+      });
     });
   }
 
@@ -49,19 +62,19 @@ class ProfileEdit extends Component {
   };
 
   onSaveButtonClick = async () => {
+    const { history } = this.props;
+    history.push('/profile');
     const {
       userName,
       userEmail,
       userImage,
       userDescribe,
     } = this.state;
-    window.location.href = '/profile';
     await updateUser({
       name: userName,
       email: userEmail,
       image: userImage,
       description: userDescribe });
-    window.location.href = '/profile';
   }
 
   isValidEmail(email) {

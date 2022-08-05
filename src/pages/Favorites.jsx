@@ -65,7 +65,7 @@ class Favorites extends Component {
   render() {
     const { isPageLoading, isSavingMusic } = this.state;
     return (
-      <div data-testid="page-album">
+      <div data-testid="page-favorites">
         <Header />
         { isSavingMusic ? <Loading /> : <> </> }
         {/* { isPageLoading ? <Loading /> : arrayMusicCardElements } */}

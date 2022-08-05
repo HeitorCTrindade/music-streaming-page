@@ -20,6 +20,10 @@ class Profile extends Component {
     });
   }
 
+  componentWillUnmount = () => {
+    this.setState = () => null;
+  }
+
   createProfileElements = () => {
     const { userData: { name, email, image, description } } = this.state;
     return (
@@ -36,7 +40,7 @@ class Profile extends Component {
   render() {
     const { isPageLoading } = this.state;
     return (
-      <div data-testid="page-album">
+      <div data-testid="page-profile">
         <Header />
         { isPageLoading ? <Loading /> : this.createProfileElements() }
       </div>

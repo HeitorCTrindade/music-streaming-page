@@ -17,6 +17,10 @@ class Header extends Component {
     });
   }
 
+  componentWillUnmount = () => {
+    this.setState = () => null;
+  }
+
   render() {
     const { userName, isPageLoading } = this.state;
     return (
